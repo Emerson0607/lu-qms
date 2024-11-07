@@ -156,3 +156,45 @@
             });
     });
 </script>
+
+
+{{-- this is for wait button function --}}
+<script>
+    // Event listener for the "Wait" button
+    document.getElementById('wait-button').addEventListener('click', function() {
+        // Update the UI elements when "Wait" is clicked
+        document.getElementById('now-serving').innerText = 'Waiting...';
+        document.getElementById('client-number').innerText = '---';
+        document.getElementById('client-name').innerText = '---';
+    });
+</script>
+
+{{-- for notify button --}}
+
+<script>
+    // Event listener for the "Notify" button
+    document.getElementById('notify-button').addEventListener('click', function() {
+        // Get the current client number from the <span id="client-number">
+        const clientNumber = document.getElementById('client-number').innerText;
+
+        // If the client number is '---', don't notify
+        if (clientNumber === '---') {
+            alert("No client to notify.");
+            return;
+        }
+
+        // Text that will be read aloud, including the client number
+        const message = `The next client number is ${clientNumber}`;
+
+        // Create a new SpeechSynthesisUtterance object
+        const speech = new SpeechSynthesisUtterance(message);
+
+        // You can customize the voice, rate, and pitch if needed
+        speech.voice = speechSynthesis.getVoices()[0]; // Default voice
+        speech.rate = 1; // Speed of the speech
+        speech.pitch = 1; // Pitch of the speech
+
+        // Speak the message
+        speechSynthesis.speak(speech);
+    });
+</script>

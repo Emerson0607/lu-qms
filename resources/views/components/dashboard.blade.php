@@ -19,10 +19,8 @@
                         </div>
                         <div>
                             <button class="btn btn-primary btn-sm" id="fetch-oldest-client">Next</button>
-
-                            <button class="btn btn-primary btn-sm" id="add-button">Add</button>
-                            <button class="btn btn-primary btn-sm" id="refresh-button">Restart Auto Refresh</button>
-                            <button class="btn btn-primary btn-sm">Wait</button>
+                            <button class="btn btn-primary btn-sm" id="notify-button">Notify</button>
+                            <button class="btn btn-primary btn-sm" id="wait-button">Wait</button>
                         </div>
                     </div>
                 </div>
