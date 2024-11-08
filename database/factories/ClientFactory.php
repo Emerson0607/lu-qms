@@ -19,6 +19,8 @@ class ClientFactory extends Factory
         return [
             'name' => $this->faker->name, // Fake name
             'number' => $this->faker->phoneNumber, // Fake phone number
+            'department' => fake()->randomElement(['IT', 'HR', 'Finance', 'Marketing']), // Randomly selects a department
+           
         ];
     }
 }

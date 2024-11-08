@@ -25,11 +25,14 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'w_id' => fake()->randomNumber(5, true), // Generates a 5-digit unique window ID
+            'department' => fake()->randomElement(['IT', 'HR', 'Finance', 'Marketing']), // Randomly selects a department
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('password'), // Password hash for 'password'
             'remember_token' => Str::random(10),
         ];
+        
     }
 
     /**

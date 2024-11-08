@@ -34,9 +34,9 @@
                 $('#user-list').html(userListHtml);
 
                 // Stop refreshing if we have 10 items
-                if (limitedClientList.length >= 10) {
-                    clearInterval(fetchInterval);
-                }
+                // if (limitedClientList.length >= 10) {
+                //     clearInterval(fetchInterval);
+                // }
             } else {
                 console.error('Expected an array of users, but got:', client);
             }
@@ -47,17 +47,40 @@
 
     // Start fetching users every 3 seconds
     function startAutoRefresh() {
-        fetchInterval = setInterval(fetchUsers, 3000);
+        fetchInterval = setInterval(fetchUsers, 2000);
     }
 
     startAutoRefresh();
 </script>
 
+{{-- display queueing window --}}
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve stored client data from localStorage and display it on page load
+        const storedClientName = localStorage.getItem('clientName') || '---';
+        const storedClientNumber = localStorage.getItem('clientNumber') || '---';
+        document.getElementById('client-name').innerText = storedClientName;
+        document.getElementById('client-number').innerText = storedClientNumber;
+        document.getElementById('now-serving').innerText = storedClientNumber === '---' ? 'Waiting' :
+            'Now Serving';
+
+        // Restore user list
+        const storedUserList = localStorage.getItem('userList');
+        if (storedUserList) {
+            document.getElementById('user-list').innerHTML = storedUserList;
+        }
+    });
+
     document.getElementById('fetch-oldest-client').addEventListener('click', function() {
         fetch('/get-oldest-client')
             .then(response => response.json())
             .then(data => {
+
+                // Check if data is available
+                if (!data || !data.name || !data.number) {
+                    alert("No client data available.");
+                    return;
+                }
                 // If data exists, update the HTML, otherwise set to '---'
                 const clientName = data.name || '---';
                 const clientNumber = data.number || '---';
@@ -74,8 +97,9 @@
                     nowServingElement.innerText = 'Now Serving';
                 }
 
-
-
+                // Save client data to localStorage
+                localStorage.setItem('clientName', clientName);
+                localStorage.setItem('clientNumber', clientNumber);
 
                 let fetchInterval;
 
@@ -83,37 +107,33 @@
                     $.get('/client', function(client) {
                         console.log(client);
 
-                        // Ensure the response is an array
                         if (Array.isArray(client)) {
-                            // Limit the list to 10 items (if more than 10)
                             const limitedClientList = client.slice(0, 10);
-
                             let userListHtml = '';
 
-                            // Generate list items with numbers, up to 10
                             for (let i = 0; i < 10; i++) {
                                 const listItemClass = i === 0 ?
                                     'fw-bold text-start queue-waiting p-3 bg-opacity-75 list-group-item text-start' :
-                                    'text-start list-group-item pl-6  pt-3 pb-3 text-start';
+                                    'text-start list-group-item pl-6 pt-3 pb-3 text-start';
 
-                                // If we have data for this index, show it
                                 if (i < limitedClientList.length) {
                                     userListHtml +=
                                         `<li class="${listItemClass}">${i + 1}. ${limitedClientList[i].name} - ${limitedClientList[i].number}</li>`;
                                 } else {
-                                    // If no data for this index, show an empty row with the number
-                                    userListHtml +=
-                                        `<li class="${listItemClass}">${i + 1}. </li>`;
+                                    userListHtml += `<li class="${listItemClass}">${i + 1}. </li>`;
                                 }
                             }
 
                             // Update the user list
-                            $('#user-list').html(userListHtml);
+                            document.getElementById('user-list').innerHTML = userListHtml;
+
+                            // Save user list HTML to localStorage
+                            localStorage.setItem('userList', userListHtml);
 
                             // Stop refreshing if we have 10 items
-                            if (limitedClientList.length >= 10) {
-                                clearInterval(fetchInterval);
-                            }
+                            // if (limitedClientList.length >= 10) {
+                            //     clearInterval(fetchInterval);
+                            // }
                         } else {
                             console.error('Expected an array of users, but got:', client);
                         }
@@ -124,39 +144,25 @@
 
                 // Start fetching users every 3 seconds
                 function startAutoRefresh() {
-                    fetchInterval = setInterval(fetchUsers, 3000);
+                    fetchInterval = setInterval(fetchUsers, 2000);
                 }
 
                 startAutoRefresh();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             })
             .catch(error => {
                 console.error('Error fetching client data:', error);
-                // In case of error, set both to '---' and set 'Now Serving' to 'Waiting'
                 document.getElementById('client-name').innerText = '---';
                 document.getElementById('client-number').innerText = '---';
                 document.getElementById('now-serving').innerText = 'Waiting';
+
+                // Clear localStorage on error
+                localStorage.removeItem('clientName');
+                localStorage.removeItem('clientNumber');
+                localStorage.removeItem('userList');
             });
     });
 </script>
-
 
 {{-- this is for wait button function --}}
 <script>
@@ -170,7 +176,6 @@
 </script>
 
 {{-- for notify button --}}
-
 <script>
     // Event listener for the "Notify" button
     document.getElementById('notify-button').addEventListener('click', function() {

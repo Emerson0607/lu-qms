@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('windows', function (Blueprint $table) {
             $table->id();
+            $table->string('w_id'); 
             $table->string('name'); // Column for the client's name
             $table->string('number'); // Column for the client's number
             $table->timestamps();

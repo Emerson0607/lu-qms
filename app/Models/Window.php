@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Window extends Model
 {
-    protected $fillable = ['name', 'number'];
+    protected $fillable = ['department', 'name', 'number'];
 }

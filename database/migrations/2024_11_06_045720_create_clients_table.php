@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('department'); 
             $table->string('name'); // Column for the client's name
             $table->string('number'); // Column for the client's number
             $table->timestamps();
