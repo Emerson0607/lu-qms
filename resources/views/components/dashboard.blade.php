@@ -6,6 +6,24 @@
                 <h3 class="fw-bold mb-3">Dashboard</h3>
                 <h6 class="op-7 mb-2">Laguna University Queuing Management System</h6>
             </div>
+
+            @guest
+                <div> <x-nav-link href="/login" :active="request()->is('/login')">Log In</x-nav-link>
+                    <x-nav-link href="/register" :active="request()->is('/register')">Register</x-nav-link>
+                </div>
+            @endguest
+
+            @auth
+                <form method="POST" action="/logout">
+                    @csrf
+
+                    <x-form-button>Log Out</x-form-button>
+                </form>
+            @endauth
+
+            {{ $slot }}
+
+
             <div class="row">
                 <div class="col-12 col-md-8">
                     <div class="d-flex align-items-center card queue-ongoing-card pb-2">

@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    public function homepage()
+    {
+        return view('homepage');
+    }
+
+
 
      // Method to display the clients on the home page
      public function index()

@@ -13,10 +13,15 @@
 <body>
     <div class="wrapper">
         <x-sidebar />
+
+
         <x-mainpanel />
+
     </div>
     <x-queue />
     <x-js-bootstrap-down />
+
+
 </body>
 
 </html>

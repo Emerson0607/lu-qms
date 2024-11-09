@@ -295,9 +295,11 @@
             </div>
         </nav>
         <!-- End Navbar -->
+
     </div>
 
-
     <div class="container">
+
         <x-dashboard />
+
     </div>
