@@ -140,11 +140,18 @@
                     <div class="col-md-4 mb-3">
                         <div class="d-flex align-items-center card queue-ongoing-card pb-2">
                             <div class="d-flex flex-column justify-content-center align-items-center queue-window">
-                                <h5 style="font-size: 14px;">${window.status || 'Waiting...'}</h5> <!-- Adjusted font size -->
-                                <h1 style="font-size: 24px;"><span class="window-number">${window.number || '---'}</span></h1> <!-- Adjusted font size -->
-                                 <h1 style="font-size: 12px;"><span class="window-number">${window.name || '---'}</span></h1> <!-- Adjusted font size -->
-                                <h6 style="font-size: 12px;">${window.department || 'window-department'}</h6> <!-- Adjusted font size -->
-                                <p><span class="window-name" style="font-size: 12px;">${window.window_name || '---'}</span></p> <!-- Adjusted font size -->
+                                <h5 style="font-size: 14px;">${window.status || 'Waiting...'}</h5> 
+                                    <!-- Adjusted font size -->
+                                <h1 style="font-size: 24px;">
+                                    <span class="window-number">${window.number || '---'}</span>
+                                </h1> 
+                                    <!-- Adjusted font size -->
+                                <h1 style="font-size: 12px;"><span class="window-number">${window.name || '---'}</span></h1> 
+                                    <!-- Adjusted font size -->
+                                <h6 style="font-size: 12px;">${window.department || 'window-department'}</h6> 
+                                    <!-- Adjusted font size -->
+                                <p><span class="window-name" style="font-size: 12px;">${window.window_name || '---'}</span></p> 
+                                    <!-- Adjusted font size -->
                             </div>
                         </div>
                     </div>
@@ -168,8 +175,6 @@
 </script>
 
 
-
-
 {{-- display queueing window --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -178,7 +183,7 @@
         const storedClientNumber = localStorage.getItem('clientNumber') || '---';
         document.getElementById('client-name').innerText = storedClientName;
         document.getElementById('client-number').innerText = storedClientNumber;
-        document.getElementById('client-status').innerText = storedClientNumber === '---' ? 'Waiting' :
+        document.getElementById('client-status').innerText = storedClientNumber === '---' ? 'Waiting...' :
             'Now Serving';
 
         // Restore user list
@@ -283,7 +288,6 @@
             });
     });
 </script>
-
 
 {{-- this is for wait button function --}}
 <script>
