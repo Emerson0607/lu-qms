@@ -10,19 +10,21 @@ use App\Http\Controllers\SessionController;
 // Route to display the clients (home page)
 Route::get('/', [ClientController::class, 'index']);
 
-// Route to get all clients (for AJAX)
-Route::get('/client', [ClientController::class, 'getAllClients'])->middleware('auth');
-Route::get('/get-oldest-client', [ClientController::class, 'getOldestClient']);
-Route::get('/windows', [ClientController::class, 'getAllWindows']);
-Route::get('/waitingQueue', [ClientController::class, 'waitingQueue']);
+Route::controller(ClientController::class)->group(function () {
+    Route::get('/client', 'getAllClients')->middleware('auth');
+    Route::get('/get-oldest-client', 'getOldestClient');
+    Route::get('/windows', 'getAllWindows');
+    Route::get('/waitingQueue', 'waitingQueue');
+    Route::get('/homepage', 'homepage');
+});
 
+Route::controller(RegisteredUserController::class)->group(function () {
+    Route::get('/register', 'create');
+    Route::post('/register', 'store');
+});
 
-Route::get('/homepage', [ClientController::class, 'homepage']);
-
-
-Route::get('/register', [RegisteredUserController::class, 'create']);
-Route::post('/register', [RegisteredUserController::class, 'store']);
-
-Route::get('/login', [SessionController::class, 'create'])->name('login');
-Route::post('/login', [SessionController::class, 'store']);
-Route::post('/logout', [SessionController::class, 'destroy']);
+Route::controller(SessionController::class)->group(function () {
+    Route::get('/login', 'create')->name('login');
+    Route::post('/login', 'store');
+    Route::post('/logout', 'destroy');
+});
