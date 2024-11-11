@@ -12,8 +12,9 @@ Route::get('/', [ClientController::class, 'index']);
 
 // Route to get all clients (for AJAX)
 Route::get('/client', [ClientController::class, 'getAllClients'])->middleware('auth');
-
 Route::get('/get-oldest-client', [ClientController::class, 'getOldestClient']);
+Route::get('/windows', [ClientController::class, 'getAllWindows']);
+Route::get('/waitingQueue', [ClientController::class, 'waitingQueue']);
 
 
 Route::get('/homepage', [ClientController::class, 'homepage']);

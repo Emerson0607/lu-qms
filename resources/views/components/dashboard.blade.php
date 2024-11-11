@@ -23,13 +23,12 @@
 
             {{ $slot }}
 
-
             <div class="row">
                 <div class="col-12 col-md-8">
                     <div class="d-flex align-items-center card queue-ongoing-card pb-2">
 
                         <div class="d-flex flex-column justify-content-center align-items-center queue-window">
-                            <h5 id="now-serving">Waiting...</h5>
+                            <h5 id="client-status">Waiting...</h5>
 
                             <h1><span id="client-number">---</span></h1>
                             <h6>Cashier Transaction</h6> {{-- waiting --}}
@@ -51,6 +50,12 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+            {{-- display all window --}}
+            <x-window_queue />
         </div>
     </div>
 </div>
