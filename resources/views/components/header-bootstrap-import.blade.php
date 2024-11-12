@@ -26,3 +26,4 @@
  <link rel="stylesheet" href="bootstrap-template/assets/css/kaiadmin.min.css" />
  <link rel="stylesheet" href="bootstrap-template/assets/css/demo.css" />
  <link rel="stylesheet" href="css/queue-stack.css" />
+ <link rel="stylesheet" href="css/all-window-queue.css" />

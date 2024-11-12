@@ -26,11 +26,11 @@ class SessionController extends Controller
             ]);
         }
         request()->session()->regenerate();
-        return redirect('/homepage');
+        return redirect('/');
     }
     public function destroy()
     {
         Auth::logout();
-        return redirect('/homepage');
+        return redirect('/');
     }
 }

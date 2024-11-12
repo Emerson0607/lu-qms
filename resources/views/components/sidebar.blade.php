@@ -3,7 +3,7 @@
       <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-              <a href="index.html" class="logo text-white">
+              <a href="/" class="logo text-white">
                   LU-QMS
               </a>
               <div class="nav-toggle">
@@ -24,12 +24,13 @@
           <div class="sidebar-content">
               <ul class="nav nav-secondary">
                   <li class="nav-item active">
-                      <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                      {{-- <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false"> --}}
+                      <a href="/">
                           <i class="fas fa-home"></i>
                           <p>Dashboard</p>
-                          <span class="caret"></span>
+                          {{-- <span class="caret"></span> --}}
                       </a>
-                      <div class="collapse" id="dashboard">
+                      {{-- <div class="collapse" id="dashboard">
                           <ul class="nav nav-collapse">
                               <li>
                                   <a href="#">
@@ -37,7 +38,7 @@
                                   </a>
                               </li>
                           </ul>
-                      </div>
+                      </div> --}}
                   </li>
                   <li class="nav-section">
                       <span class="sidebar-mini-icon">
@@ -46,9 +47,15 @@
                       <h4 class="text-section">Components</h4>
                   </li>
                   <li class="nav-item">
-                      <a href="#">
+                      <a href="/window">
                           <i class="fas fa-layer-group"></i>
                           <p>Window</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="/user">
+                          <i class="fas fa-layer-group"></i>
+                          <p>User</p>
                       </a>
                   </li>
                   <li class="nav-item">
