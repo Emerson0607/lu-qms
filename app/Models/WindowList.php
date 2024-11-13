@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class WindowList extends Model
 {
-    //
+    protected $table = 'window_list'; 
 }

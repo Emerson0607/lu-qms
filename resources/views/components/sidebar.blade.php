@@ -52,12 +52,12 @@
                           <p>Window</p>
                       </a>
                   </li>
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                       <a href="/user">
                           <i class="fas fa-layer-group"></i>
                           <p>User</p>
                       </a>
-                  </li>
+                  </li> --}}
                   <li class="nav-item">
                       <a data-bs-toggle="collapse" href="#base">
                           <i class="fas fa-layer-group"></i>

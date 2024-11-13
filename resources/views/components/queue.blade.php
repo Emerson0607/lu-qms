@@ -55,7 +55,6 @@
     });
 </script>
 
-
 {{-- for all window queue --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -64,6 +63,7 @@
         function fetchWindows() {
             $.get('/windows', function(window_queue) {
                 console.log(window_queue);
+
 
                 // Clear existing window data
                 $('#window-container').empty();
@@ -111,7 +111,6 @@
         startAutoRefresh();
     });
 </script>
-
 
 {{-- display queueing window --}}
 <script>

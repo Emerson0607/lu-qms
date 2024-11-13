@@ -16,10 +16,10 @@ Route::middleware('auth')->controller(ClientController::class)->group(function (
     Route::get('/windows', 'getAllWindows');
     Route::get('/waitingQueue', 'waitingQueue');
     Route::get('/window', 'window');
-    Route::get('/user', 'user');
-    Route::post('/user', 'store');
-    Route::put('/user/{user}', 'update');
-    Route::delete('/user/{user}','destroy');
+    // Route::get('/user', 'user');
+    // Route::post('/user', 'store');
+    // Route::put('/user/{user}', 'update');
+    // Route::delete('/user/{user}','destroy');
 
 });
 

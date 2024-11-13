@@ -16,11 +16,17 @@
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12 ">
                 <x-form-field>
-                    <div class="sm:col-span-4">
+                    {{-- <div class="sm:col-span-4">
                         <x-form-label for="email"> Email </x-form-label>
                         <x-form-input type="email" name="email" id="email" :value="old('email')"
                             placeholder="email@example.com" />
                         <x-form-error name="email" />
+                    </div> --}}
+                    <div class="sm:col-span-4">
+                        <x-form-label for="username2"> Username </x-form-label>
+                        <x-form-input type="text" name="username2" id="username2" :value="old('username2')"
+                            placeholder="Enter username" />
+                        <x-form-error name="username2" />
                     </div>
                 </x-form-field>
                 <x-form-field>

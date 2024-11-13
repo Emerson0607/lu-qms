@@ -15,14 +15,14 @@ class SessionController extends Controller
     {
         $validatedattributes = request()->validate([
 
-            'email' => ['required'],
+            'username2' => ['required'],
             'password' => ['required'] //password_confirmation
 
         ]);
 
         if (!Auth::attempt($validatedattributes)) {
             throw ValidationException::withMessages([
-                'email' => trans('Sorry, credentials do not match'),
+                'username2' => trans('Sorry, credentials do not match'),
             ]);
         }
         request()->session()->regenerate();

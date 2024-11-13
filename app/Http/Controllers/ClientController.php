@@ -10,8 +10,6 @@ use App\Models\Department;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 
-
-
 class ClientController extends Controller
 {
     public function index()
@@ -29,62 +27,63 @@ class ClientController extends Controller
         return view('homepage');
     }
 
-    public function user()
-    {
-        $users = User::all();
-        $departments = Department::all();  // Get all departments from the database
-      
-        return view('user.user', compact(['users', 'departments']));
-    }
+   
 
-
-
- 
-     // Method to get all clients (for AJAX)
-     public function getAllClients()
+     // display in queue stack
+    public function getAllClients()
      {
-        $currentDepartment = Auth::user()->department;
+        // $currentDepartment = Auth::user()->department;
+        // $clients = Client::where('department', $currentDepartment)->get();
+        // return response()->json($clients);
 
-        $clients = Client::where('department', $currentDepartment)->get();
+        $dmsUserDepts = \App\Models\DmsUserDepts::where('p_id',  Auth::user()->p_id)->first();
+        $department = \App\Models\DmsDepartment::find($dmsUserDepts->dept_id);
+        $clients = \App\Models\Client::where('department', $department->name)->get();
 
         return response()->json($clients);
      }
 
-
+    // display all window per department
     public function getAllWindows()
     {
-        $currentDepartment = Auth::user()->department;
+
+        $dmsUserDepts = \App\Models\DmsUserDepts::where('p_id',  Auth::user()->p_id)->first();
+        $department = \App\Models\DmsDepartment::find($dmsUserDepts->dept_id);
     
-        // Fetch the windows and join with window_list to fetch the window name
-        $window_queue = Window::where('department', $currentDepartment)
-            ->leftJoin('window_list', 'windows.w_id', '=', 'window_list.w_id')
-            ->select('windows.*', 'window_list.name as window_name') // Selecting the window data and name from window_list
-            ->get();
+        $window_queue = Window::where('department', $department->name) // Filter by department name
+        ->join('window_list', 'windows.w_id', '=', 'window_list.w_id') // Join with window_list table
+        ->select('windows.*', 'window_list.name as window_name') // Select all columns from windows and the window name
+        ->get();
     
         // Return the result as JSON
         return response()->json($window_queue);
+
     }
     
-
-   
+    // get the first data in the stack which is the oldest  
     public function getOldestClient()
     {
-        // Fetch the oldest client from the clients table
+        $dmsUserDepts = \App\Models\DmsUserDepts::where('p_id',  Auth::user()->p_id)->first();
+        $department = \App\Models\DmsDepartment::find($dmsUserDepts->dept_id);
 
-        $currentDepartment = Auth::user()->department;
-        $user_w_id = Auth::user()->w_id;
+        $currentDepartment = $department->name;
+
+        $user_w_id = \App\Models\WindowList::where('p_id', Auth::user()->p_id)->first();
+
+        
         $client = Client::where('department', $currentDepartment)->oldest()->first();
+
 
     
         if ($client) {
             // Update or create the Window record with matching w_id and department
             Window::updateOrCreate(
-                ['w_id' => $user_w_id, 'department' => $currentDepartment],
+                ['w_id' => $user_w_id->w_id, 'department' => $currentDepartment],
                 ['name' => $client->name, 'number' => $client->number, 'status' => "Now Serving"]
             );
         
             // Retrieve the updated or created Window record
-            $window = Window::where('w_id', $user_w_id)
+            $window = Window::where('w_id', $user_w_id->w_id)
                             ->where('department', $currentDepartment)
                             ->first();
         
@@ -92,7 +91,7 @@ class ClientController extends Controller
             $client->delete();
         
             return response()->json([
-                'name' => $window->name,
+                'name' => $window->w_id,
                 'number' => $window->number,
                 'w_id' => $window->w_id,
                 'department' => $window->department,
@@ -103,31 +102,35 @@ class ClientController extends Controller
                 'message' => 'No clients found.'
             ], 404);
         }
-
-
     }
 
-
-
-    
     public function waitingQueue()
     {
 
-        $currentDepartment = Auth::user()->department;
-        $user_w_id = Auth::user()->w_id;
-        $window = Window::where('w_id', $user_w_id)
+
+
+        
+        $dmsUserDepts = \App\Models\DmsUserDepts::where('p_id',  Auth::user()->p_id)->first();
+        $department = \App\Models\DmsDepartment::find($dmsUserDepts->dept_id);
+        $currentDepartment = $department->name;
+
+        $user_w_id = \App\Models\WindowList::where('p_id', Auth::user()->p_id)->first();
+
+        $window = Window::where('w_id', $user_w_id->w_id)
         ->where('department', $currentDepartment)
         ->first();
+
+
 
         if ($window) {
             // Update or create the Window record with matching w_id and department
             Window::updateOrCreate(
-                ['w_id' => $user_w_id, 'department' => $currentDepartment],
+                ['w_id' => $user_w_id->w_id, 'department' => $currentDepartment],
                 ['name' => "---", 'number' => "---", 'status' => "Waiting..."]
             );
         
             // Retrieve the updated or created Window record
-            $window = Window::where('w_id', $user_w_id)
+            $window = Window::where('w_id', $user_w_id->w_id)
                             ->where('department', $currentDepartment)
                             ->first();
     
@@ -145,6 +148,16 @@ class ClientController extends Controller
         }
 
 
+    }
+
+    
+    // for user management
+    public function user()
+    {
+        $users = User::all();
+        $departments = Department::all(); 
+      
+        return view('user.user', compact(['users', 'departments']));
     }
 
     public function store()
@@ -197,14 +210,4 @@ class ClientController extends Controller
         return redirect()->back()->with('success', 'User deleted successfully.');
     }
 
-
-
-
-
-
-
-
-
-
-    
 }
