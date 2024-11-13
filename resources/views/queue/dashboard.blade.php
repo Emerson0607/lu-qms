@@ -1,4 +1,6 @@
 <x-layout>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/adapter/7.0.0/adapter.min.js"></script>
+
 
     <div class="page-inner" style="padding-left:50px">
         <div class="d-flex justify-content-center pl-5">
@@ -47,5 +49,7 @@
             </div>
         </div>
     </div>
+
+
 
 </x-layout>

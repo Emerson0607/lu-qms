@@ -10,7 +10,7 @@
     <x-header-bootstrap-import />
 </head>
 
-<body onload="configure">
+<body>
 
     <div class="wrapper">
         <x-sidebar />
